@@ -1,6 +1,9 @@
 {
   "packages": {
     "bootstrap-3": {},
-    "marked": {}
+    "marked": {},
+    "accounts-ui-bootstrap-3": {},
+    "bootstrap-wysiwyg": {},
+    "bootstrap-wysihtml5": {}
   }
 }
