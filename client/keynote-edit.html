@@ -1,3 +1,6 @@
+<head>
+  <script type="text/javascript" src="/tinymce/tinymce.min.js"></script>
+</head>
 <template name="keynoteEdit">
 	{{#with keynote}}
     <div class="color-line color-{{show}}"></div>
@@ -89,7 +92,7 @@
   <div class="one-slide form-group {{focus}}">
     <div class="form-group">
       <label class="control-label" for="slides__{{i}}__code">Slide {{no}}</label>
-      <textarea id="slides__{{i}}__code" name="slides__{{i}}__code" class="form-control" rows="10" placeholder="Markdown or HTML">{{code}}</textarea>
+      <textarea id="slides__{{i}}__code" name="slides__{{i}}__code" class="form-control textarea" rows="10" placeholder="Markdown or HTML">{{code}}</textarea>
     </div>
 
     <div class="form-group row">

@@ -90,7 +90,7 @@ var removePresentation = function (_id) {
 Template.keynoteEdit.events({
   'input form, click label.btn, change form': function (e, template) {
     Session.set('keynoteUnsaved', true);
-
+    
     if (e.type === 'change') {
       _saveKeynote.call(keynote(), e, template);
     } else {
@@ -216,10 +216,39 @@ Template.keynoteEdit.events({
 
 Template.keynoteEdit.rendered = function () {
   //console.log('Template.keynoteEdit.rendered');
+  var template = this;
 
-  emmet.require('textarea').setup({
-      pretty_break: false,
-      use_tab: true
+  $.each($('textarea.textarea'), function(i, ta) {
+    tinyMCE.init({
+      mode : "textareas",
+      selector : "#"+ta.id,
+      setup : function(ed) {
+        ed.on('blur', function(e) {
+          ed.save();
+          Session.set('keynoteUnsaved', true);
+          _saveKeynote.call(keynote(), e, template);
+        })
+      },
+      plugins: [
+        "advlist autolink link image lists charmap preview hr anchor pagebreak",
+        "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+        "table contextmenu directionality emoticons template textcolor paste textcolor"
+      ],
+      toolbar1: "bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect",
+      toolbar2: "cut copy paste | bullist numlist | outdent indent blockquote | undo redo | link unlink anchor image media code | inserttime | forecolor backcolor",
+      toolbar3: "table | hr removeformat | subscript superscript | charmap preview | print fullscreen | ltr rtl | spellchecker | visualchars visualblocks nonbreaking template pagebreak restoredraft",
+      menubar: false,
+      toolbar_items_size: 'small',
+      style_formats: [
+        {title: 'Bold text', inline: 'b'},
+        {title: 'Red text', inline: 'span', styles: {color: '#ff0000'}},
+        {title: 'Red header', block: 'h1', styles: {color: '#ff0000'}},
+        {title: 'Example 1', inline: 'span', classes: 'example1'},
+        {title: 'Example 2', inline: 'span', classes: 'example2'},
+        {title: 'Table styles'},
+        {title: 'Table row 1', selector: 'tr', classes: 'tablerow1'}
+      ],
+    });
   });
 
   var _keynote = keynote(),
